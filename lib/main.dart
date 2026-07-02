@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       routes: CalcXAppRouter.routes,
       initialRoute: AppRoutes.splash,
       title: "CALC X",
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.dark,
       theme: AppThemes.lightTheme,
       darkTheme: AppThemes.darkTheme,
     );

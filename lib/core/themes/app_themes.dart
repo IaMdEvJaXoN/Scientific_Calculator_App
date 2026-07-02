@@ -2,89 +2,80 @@ import 'package:calc_x/core/themes/colors.dart';
 import 'package:flutter/material.dart';
 
 class AppThemes {
-  //Dark theme
+  // Dark theme
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
-
     useMaterial3: true,
 
-    // Entire application background
     scaffoldBackgroundColor: DarkColors.darkBackground,
 
-    colorScheme: ColorScheme.dark(
-      // Main app accent
-      // Used for:
-      // - Equals button
-      // - Active DEG/RAD
-      // - Selected states
-      // - Important actions
-      primary: DarkColors.cyan,
+    colorScheme: const ColorScheme.dark(
+      primary: DarkColors.primaryColor,
+      secondary: DarkColors.secondaryColor,
+      surface: DarkColors.surfaceColor,
+    ),
 
-      // Scientific/advanced accent
-      // Used for:
-      // - MODE
-      // - 2nd
-      // - Scientific buttons
-      secondary: DarkColors.secondary,
+    iconTheme: IconThemeData(color: DarkColors.iconColor),
 
-      // Cards, containers, surfaces
-      // Used for:
-      // - History cards
-      // - Settings cards
-      // - Calculator containers
-      surface: DarkColors.darkSurface,
+    textTheme: TextTheme(
+      // Large calculator result
+      displayLarge: TextStyle(
+        fontSize: 35,
+        fontWeight: FontWeight.bold,
+        color: DarkColors.displayLargeColor,
+      ),
 
-      // Text/icons on cyan buttons
-      onPrimary: Colors.black,
+      // Calculator expression/history
+      headlineLarge: TextStyle(
+        fontSize: 24,
+        color: DarkColors.headLineLargeColor,
+      ),
 
-      // Text/icons on surfaces
-      onSurface: DarkColors.textPrimary,
+      //titles
+      titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
 
-      // Error actions
-      // Used for:
-      // - DEL
-      // - AC
-      // - Delete history
-      error: DarkColors.error,
+      // Normal text
+      bodyLarge: TextStyle(fontSize: 16),
 
-      // Borders and dividers
-      outline: DarkColors.outline,
+      // Button labels
+      labelLarge: TextStyle(
+        fontSize: 30,
+        fontWeight: FontWeight.bold,
+        color: DarkColors.buttonTextColor,
+      ),
     ),
   );
-  //Light theme
 
+  // Light theme
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
-
     useMaterial3: true,
 
-    // Entire application background
-    scaffoldBackgroundColor: LightColors.background,
+    scaffoldBackgroundColor: LightColors.lightBackground,
 
-    colorScheme: ColorScheme.light(
-      // Main app accent
-      // Equals button, active states, selected items
-      primary: LightColors.primary,
+    colorScheme: const ColorScheme.light(
+      primary: LightColors.primaryColor,
+      secondary: LightColors.secondaryColor,
+      surface: LightColors.surfaceColor,
+    ),
 
-      // Scientific/advanced accent
-      // MODE, 2nd, scientific functions
-      secondary: LightColors.secondary,
+    iconTheme: IconThemeData(color: LightColors.iconColor),
 
-      // Cards, display containers, surfaces
-      surface: LightColors.surface,
+    textTheme: TextTheme(
+      displayLarge: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
 
-      // Text/icons on primary buttons
-      onPrimary: Colors.white,
+      headlineLarge: TextStyle(fontSize: 24),
 
-      // Main text on surfaces
-      onSurface: LightColors.textPrimary,
+      titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
 
-      // Error actions
-      // DEL, AC, destructive actions
-      error: LightColors.errorColor,
+      bodyLarge: TextStyle(fontSize: 16),
 
-      // Borders/dividers
-      outline: LightColors.outline,
+      //Button labels
+      labelLarge: TextStyle(
+        fontSize: 30,
+        fontWeight: FontWeight.bold,
+        color: LightColors.buttonTextColor,
+      ),
     ),
   );
 }
