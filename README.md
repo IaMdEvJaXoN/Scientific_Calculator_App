@@ -1,17 +1,58 @@
-# calc_x
+# Scientific Calculator
 
-A new Flutter project.
+A modern scientific calculator built with Flutter that provides a clean interface and supports both basic and advanced mathematical operations.
+
+## Features
+
+* Basic arithmetic operations
+
+  * Addition
+  * Subtraction
+  * Multiplication
+  * Division
+
+* Scientific functions
+
+  * Trigonometric functions
+  * Logarithms
+  * Powers and roots
+  * calculus
+  * complex numbers
+  * matrices
+  * number systems
+
+* User experience
+
+  * Light and Dark themes
+  * Responsive layout
+  * Clean Material 3 design
+  * Scientific and standard calculator modes
+  * ANS (previous answer) support
+
+## Built With
+
+* Flutter
+* Dart
+* Material 3
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. Clone the repository.
+2. Run:
 
-A few resources to get you started if this is your first Flutter project:
+   ```bash
+   flutter pub get
+   ```
+3. Start the application:
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+   ```bash
+   flutter run
+   ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Status
+
+🚧 This project is currently under active development. New features and improvements are added regularly.
+
+## License
+
+This project is intended for learning and personal use.
