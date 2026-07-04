@@ -1,3 +1,4 @@
+import 'package:calc_x/core/routing/app_routes.dart';
 import 'package:calc_x/core/themes/colors.dart';
 import 'package:calc_x/core/utils/calc_buttons.dart';
 import 'package:calc_x/features/calculator_feature/presentation/widgets/displayArea.dart';
@@ -13,9 +14,20 @@ class CalcScreen extends StatefulWidget {
 }
 
 class _CalcScreenState extends State<CalcScreen> {
+  // gridButton callbacks
   void buttonPressed(String value) {
     //Handle the string parsed by the gridview
   }
+
+  //settings,history,light/dark mode icons callbacks
+  void topBarIconPressed(String pressedIcon) {
+    if (pressedIcon == "history") {
+      Navigator.pushNamed(context, AppRoutes.historyScreen);
+    } else if (pressedIcon == "settings") {
+      Navigator.pushNamed(context, AppRoutes.settings);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +41,7 @@ class _CalcScreenState extends State<CalcScreen> {
               child: Material(
                 elevation: 8,
                 borderRadius: BorderRadius.circular(20),
-                child: TopBar(),
+                child: TopBar(onIconPressed: topBarIconPressed),
               ),
             ),
 

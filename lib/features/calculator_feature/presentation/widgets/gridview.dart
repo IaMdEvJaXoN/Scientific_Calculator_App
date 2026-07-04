@@ -1,6 +1,8 @@
+import 'package:calc_x/shared/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ButtonsGrid extends StatefulWidget {
+class ButtonsGrid extends ConsumerStatefulWidget {
   final List<String> buttons;
   final Function(String) onButtonPressed;
   const ButtonsGrid({
@@ -10,13 +12,15 @@ class ButtonsGrid extends StatefulWidget {
   });
 
   @override
-  State<ButtonsGrid> createState() => _ButtonsGridState();
+  ConsumerState<ButtonsGrid> createState() => _ButtonsGridState();
 }
 
-class _ButtonsGridState extends State<ButtonsGrid> {
+class _ButtonsGridState extends ConsumerState<ButtonsGrid> {
   @override
   Widget build(BuildContext context) {
     final List<String> gridButtons = widget.buttons;
+    final myAppThemeProvider = ref.watch(appThemeProvider);
+    final isDark = myAppThemeProvider == ThemeMode.dark ? true : false;
 
     return GridView.builder(
       padding: EdgeInsets.all(10),
@@ -30,23 +34,23 @@ class _ButtonsGridState extends State<ButtonsGrid> {
         Color backGroundColor = Theme.of(context).colorScheme.surface;
         final buttonText = gridButtons[index];
         if (buttonText == "DEL" || buttonText == "AC") {
-          Theme.of(context).brightness == Brightness.dark
+          isDark
               ? backGroundColor = const Color(0xFF8B0000)
               : backGroundColor = const Color(0xFFEBA4A4);
         } else if (["x", "÷", "+", "-"].contains(buttonText)) {
-          Theme.of(context).brightness == Brightness.dark
+          isDark
               ? backGroundColor = const Color(0xFF076D79)
               : backGroundColor = const Color(0xFFB1C2C3);
         } else if (buttonText == "=") {
-          Theme.of(context).brightness == Brightness.dark
+          isDark
               ? backGroundColor = const Color(0xFF115875)
               : backGroundColor = const Color(0xFF016878);
         } else if (buttonText == "MODE") {
-          Theme.of(context).brightness == Brightness.dark
+          isDark
               ? backGroundColor = const Color(0xFF6471B5)
               : backGroundColor = const Color(0xFF163CFA);
         } else if (buttonText == "⇄" || buttonText == "ANS") {
-          Theme.of(context).brightness == Brightness.dark
+          isDark
               ? backGroundColor = const Color(0xFF6671AB)
               : backGroundColor = const Color(0xFF6671AB);
         }

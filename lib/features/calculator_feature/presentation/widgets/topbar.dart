@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TopBar extends StatefulWidget {
-  const TopBar({super.key});
+  final void Function(String) onIconPressed;
+  const TopBar({super.key, required this.onIconPressed});
 
   @override
   State<TopBar> createState() => _TopBarState();
@@ -15,7 +16,10 @@ class _TopBarState extends State<TopBar> {
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton(onPressed: (){}, child: Center(child: Text("DEG"))),
+          child: ElevatedButton(
+            onPressed: () {},
+            child: Center(child: Text("DEG")),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -24,9 +28,19 @@ class _TopBarState extends State<TopBar> {
             child: Center(child: Text("COMP")),
           ),
         ),
-        IconButton(onPressed: (){}, icon: Icon(Icons.history_rounded)),
-         IconButton(onPressed: () {}, icon: Icon(Icons.settings)),
-      ]
+        IconButton(
+          onPressed: () {
+            widget.onIconPressed("history");
+          },
+          icon: Icon(Icons.history_rounded),
+        ),
+        IconButton(
+          onPressed: () {
+            widget.onIconPressed("settings");
+          },
+          icon: Icon(Icons.settings),
+        ),
+      ],
     );
   }
 }

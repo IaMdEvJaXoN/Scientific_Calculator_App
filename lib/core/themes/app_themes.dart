@@ -32,7 +32,11 @@ class AppThemes {
       ),
 
       //titles
-      titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+      titleLarge: TextStyle(
+        fontSize: 25,
+        fontWeight: FontWeight.w600,
+        color: DarkColors.titleLargeColor,
+      ),
 
       // Normal text
       bodyLarge: TextStyle(fontSize: 16),
@@ -64,9 +68,16 @@ class AppThemes {
     textTheme: TextTheme(
       displayLarge: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
 
-      headlineLarge: TextStyle(fontSize: 24),
+      headlineLarge: TextStyle(
+        fontSize: 24,
+        color: DarkColors.headLineLargeColor,
+      ),
 
-      titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+      titleLarge: TextStyle(
+        fontSize: 25,
+        fontWeight: FontWeight.w600,
+        color: LightColors.buttonTextColor,
+      ),
 
       bodyLarge: TextStyle(fontSize: 16),
 
@@ -74,7 +85,7 @@ class AppThemes {
       labelLarge: TextStyle(
         fontSize: 30,
         fontWeight: FontWeight.bold,
-        color: LightColors.buttonTextColor,
+        //color: LightColors.buttonTextColor,
       ),
     ),
   );

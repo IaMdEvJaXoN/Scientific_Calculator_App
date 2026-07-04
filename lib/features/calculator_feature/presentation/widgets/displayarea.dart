@@ -1,4 +1,5 @@
 import 'Package:flutter/material.dart';
+import 'package:calc_x/core/themes/colors.dart';
 
 class DisplayArea extends StatefulWidget {
   const DisplayArea({super.key});
@@ -13,7 +14,8 @@ class _DisplayareaState extends State<DisplayArea> {
     return Container(
       margin: EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(35, 255, 255, 255),
+        border: Border.all(width: 4, color: DarkColors.displayAreaOutlineColor),
+        color: DarkColors.displayAreaContainerBackground,
         borderRadius: BorderRadius.circular(50),
       ),
       child: Column(
@@ -23,8 +25,8 @@ class _DisplayareaState extends State<DisplayArea> {
           Expanded(
             flex: 2,
             child: Container(
-              color: const Color.fromARGB(0, 255, 255, 255),
-              margin: EdgeInsets.all(16),
+              color: DarkColors.resultAndExpressionDisplayBackgnd,
+              margin: EdgeInsets.all(10),
               alignment: Alignment.bottomRight,
               child: Text(
                 "RESULT",
@@ -36,7 +38,7 @@ class _DisplayareaState extends State<DisplayArea> {
             flex: 5,
             child: Container(
               margin: EdgeInsets.all(15),
-              color: const Color.fromARGB(0, 255, 255, 255),
+              color: DarkColors.resultAndExpressionDisplayBackgnd,
               alignment: Alignment.bottomRight,
               child: Text(
                 "EXPRESSION",

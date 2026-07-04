@@ -1,3 +1,5 @@
+import 'package:calc_x/features/history_feature/presentation/widgets/app_bar.dart';
+import 'package:calc_x/features/history_feature/presentation/widgets/history_screen_body.dart';
 import 'package:flutter/material.dart';
 
 class Historyscreen extends StatefulWidget {
@@ -10,6 +12,10 @@ class Historyscreen extends StatefulWidget {
 class _HistoryscreenState extends State<Historyscreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: HistoryAppBar(),
+      body: SafeArea(
+        child: HistoryScreenBody()),
+    );
   }
 }

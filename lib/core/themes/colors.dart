@@ -11,6 +11,13 @@ class DarkColors {
   static const Color buttonTextColor = Color(0xFFFFFFFF);
   static const Color iconColor = Color(0xFF8188AA);
   static const Color gridColorforLightandDarkModes = Color(0x23FFFFFF);
+  static const Color displayAreaOutlineColor = Color(0xFF393838);
+  static const Color displayAreaContainerBackground = Color(0x23FFFFFF);
+  static const Color resultAndExpressionDisplayBackgnd = Color(0x00FFFFFF);
+  static const Color titleLargeColor = Color(0xFF90BDC1);
+  static const Color historyScreenText = Color(
+    0xFEB5FFEF,
+  ); //Recent acivity and number of entries
 }
 
 // LIGHT THEME COLORS
@@ -23,5 +30,6 @@ class LightColors {
   // static const displayLargeColor = Color(0xFF9A9696);
   // static const headLineLargeColor = Color(0xFF00FFFF);
   static const Color buttonTextColor = Color(0xFF000000);
-  static const Color iconColor = Color(0xFF8188AA);
+  static const Color iconColor = Color.fromARGB(255, 43, 56, 119);
+  static const Color titleLargeColor = Color(0x00000000);
 }

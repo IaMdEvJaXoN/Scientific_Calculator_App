@@ -22,6 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
       return;
     }
 
+    //For redundancy
     if (!mounted) {
       return;
     }
@@ -34,10 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: SafeArea(
         child: SizedBox.expand(
-          child: Image.asset(
-            "assets/images/splash_image.png",
-            fit: BoxFit.fill,
-          ),
+          child: Image.asset("assets/images/splash_image.png", fit: BoxFit.fill),
         ),
       ),
     );
