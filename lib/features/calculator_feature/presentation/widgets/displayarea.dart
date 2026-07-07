@@ -1,16 +1,19 @@
 import 'Package:flutter/material.dart';
 import 'package:calc_x/core/themes/colors.dart';
+import 'package:calc_x/features/calculator_feature/presentation/providers/calc_display_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DisplayArea extends StatefulWidget {
+class DisplayArea extends ConsumerStatefulWidget {
   const DisplayArea({super.key});
 
   @override
-  State<DisplayArea> createState() => _DisplayareaState();
+  ConsumerState<DisplayArea> createState() => _DisplayareaState();
 }
 
-class _DisplayareaState extends State<DisplayArea> {
+class _DisplayareaState extends ConsumerState<DisplayArea> {
   @override
   Widget build(BuildContext context) {
+    final displayAreaProvider = ref.watch(expressionAndResultProvider);
     return Container(
       margin: EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -24,13 +27,16 @@ class _DisplayareaState extends State<DisplayArea> {
         children: [
           Expanded(
             flex: 2,
-            child: Container(
-              color: DarkColors.resultAndExpressionDisplayBackgnd,
-              margin: EdgeInsets.all(10),
-              alignment: Alignment.bottomRight,
-              child: Text(
-                "RESULT",
-                style: Theme.of(context).textTheme.displayLarge,
+            child: Padding(
+              padding: const EdgeInsets.all(1.0),
+              child: Container(
+                color: DarkColors.resultAndExpressionDisplayBackgnd,
+                margin: EdgeInsets.all(10),
+                alignment: Alignment.bottomRight,
+                child: Text(
+                  displayAreaProvider.result,
+                  style: Theme.of(context).textTheme.displayLarge,
+                ),
               ),
             ),
           ),
@@ -41,7 +47,7 @@ class _DisplayareaState extends State<DisplayArea> {
               color: DarkColors.resultAndExpressionDisplayBackgnd,
               alignment: Alignment.bottomRight,
               child: Text(
-                "EXPRESSION",
+                displayAreaProvider.expression,
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
             ),

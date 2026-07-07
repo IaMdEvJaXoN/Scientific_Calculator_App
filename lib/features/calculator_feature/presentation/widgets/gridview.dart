@@ -23,7 +23,7 @@ class _ButtonsGridState extends ConsumerState<ButtonsGrid> {
     final isDark = myAppThemeProvider == ThemeMode.dark ? true : false;
 
     return GridView.builder(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(15),
       itemCount: gridButtons.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 5,
@@ -45,14 +45,36 @@ class _ButtonsGridState extends ConsumerState<ButtonsGrid> {
           isDark
               ? backGroundColor = const Color(0xFF115875)
               : backGroundColor = const Color(0xFF016878);
-        } else if (buttonText == "MODE") {
-          isDark
-              ? backGroundColor = const Color(0xFF6471B5)
-              : backGroundColor = const Color(0xFF163CFA);
-        } else if (buttonText == "⇄" || buttonText == "ANS") {
+        } else if (buttonText == "⇄" || buttonText == "Ans") {
           isDark
               ? backGroundColor = const Color(0xFF6671AB)
               : backGroundColor = const Color(0xFF6671AB);
+        } else if (["2nd", "sin(", "cos(", "tan("].contains(buttonText)) {
+          isDark
+              ? backGroundColor = const Color.fromARGB(255, 1, 11, 57)
+              : backGroundColor = const Color.fromARGB(255, 77, 98, 220);
+        } else if (["pi", "e"].contains(buttonText)) {
+          isDark
+              ? backGroundColor = const Color.fromARGB(255, 48, 30, 14)
+              : backGroundColor = const Color.fromARGB(255, 78, 19, 3);
+        } else if ([
+          ",",
+          "X",
+          "Y",
+          "log(a,b)",
+          ".",
+          "!",
+          "^",
+          "(",
+          ")",
+        ].contains(buttonText)) {
+          isDark
+              ? backGroundColor = const Color.fromARGB(255, 51, 51, 60)
+              : backGroundColor = const Color.fromARGB(255, 41, 45, 63);
+        } else if (buttonText == "f↔d") {
+          isDark
+              ? backGroundColor = const Color.fromARGB(255, 43, 65, 66)
+              : backGroundColor = const Color.fromARGB(255, 34, 50, 54);
         }
         return ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -67,18 +89,18 @@ class _ButtonsGridState extends ConsumerState<ButtonsGrid> {
           child: Center(
             child: Text(
               gridButtons[index],
-              style: ["DEL", "□⁄□"].contains(buttonText)
+              style: ["DEL", "cos(", "sin(", "tan(", "2nd"].contains(buttonText)
                   ? Theme.of(
                       context,
                     ).textTheme.labelLarge?.copyWith(fontSize: 24)
-                  : ["f↔d", "ANS"].contains(buttonText)
+                  : ["f↔d", "Ans"].contains(buttonText)
                   ? Theme.of(
                       context,
                     ).textTheme.labelLarge?.copyWith(fontSize: 22)
-                  : buttonText == "MODE"
+                  : buttonText == "log(a,b)"
                   ? Theme.of(
                       context,
-                    ).textTheme.labelLarge?.copyWith(fontSize: 14)
+                    ).textTheme.labelLarge?.copyWith(fontSize: 16)
                   : Theme.of(context).textTheme.labelLarge,
             ),
           ),

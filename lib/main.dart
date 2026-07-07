@@ -4,8 +4,12 @@ import 'package:calc_x/core/themes/app_themes.dart';
 import 'package:calc_x/shared/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/adapters.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await Hive.openBox<String>("history"); //Creates a database called history
   runApp(const ProviderScope(child: MyApp()));
 }
 

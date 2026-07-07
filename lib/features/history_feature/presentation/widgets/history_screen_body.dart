@@ -1,28 +1,37 @@
 import 'package:calc_x/core/themes/colors.dart';
 import 'package:calc_x/core/utils/string_splitting.dart';
+import 'package:calc_x/features/history_feature/presentation/providers/history_providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HistoryScreenBody extends StatefulWidget {
+class HistoryScreenBody extends ConsumerStatefulWidget {
   const HistoryScreenBody({super.key});
-
   @override
-  State<HistoryScreenBody> createState() => _HistoryScreenBodyState();
+  ConsumerState<HistoryScreenBody> createState() => _HistoryScreenBodyState();
 }
 
-class _HistoryScreenBodyState extends State<HistoryScreenBody> {
-  List<String> historyList = [
-    "Sin(30)~0.5~2 hours ago",
-    "Sin(30)~0.5~2 hours ago",
-    "Sin(30)~0.5~2 hours ago",
-    "Sin(30)~0.5~2 hours ago",
-    "Sin(30)~0.5~2 hours ago",
-    "Sin(30)~0.5~2 hours ago",
-    "Sin(30)~0.5~2 hours ago",
-    "Sin(30)~0.5~2 hours ago",
-    "Sin(30)-56/45+23-44~0.5~2 hours ago",
-  ];
+class _HistoryScreenBodyState extends ConsumerState<HistoryScreenBody> {
+  late List<String> historyList;
+
+  //Any time the user navigates to this screen this method is called
+  @override
+  void initState() {
+    super.initState();
+    ref.read(historyProvider.notifier).fetchHistoryToDisplay();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final historyState = ref.watch(historyProvider);
+    historyList = historyState.history;
+    if (historyList.isEmpty) {
+      return Center(
+        child: Text('''OOPS !!! 
+CAN'T
+RECALL
+        ''', style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+      );
+    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -77,7 +86,11 @@ class _HistoryScreenBodyState extends State<HistoryScreenBody> {
                           Expanded(
                             flex: 1,
                             child: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                ref
+                                    .read(historyProvider.notifier)
+                                    .removeItemFromHistory(index);
+                              },
                               icon: Icon(Icons.delete),
                             ),
                           ),
@@ -114,7 +127,16 @@ class _HistoryScreenBodyState extends State<HistoryScreenBody> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Expanded(flex: 9, child: Text(historyParts[2],style: TextStyle(fontSize: 10,color: const Color.fromARGB(255, 64, 89, 102)),)),
+                          Expanded(
+                            flex: 9,
+                            child: Text(
+                              historyParts[2],
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: const Color.fromARGB(255, 64, 89, 102),
+                              ),
+                            ),
+                          ),
                           Expanded(
                             flex: 1,
                             child: IconButton(

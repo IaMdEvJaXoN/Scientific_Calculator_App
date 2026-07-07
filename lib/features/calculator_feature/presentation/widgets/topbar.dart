@@ -1,31 +1,40 @@
+import 'package:calc_x/shared/providers/angle_mode_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TopBar extends StatefulWidget {
+class TopBar extends ConsumerStatefulWidget {
   final void Function(String) onIconPressed;
   const TopBar({super.key, required this.onIconPressed});
 
   @override
-  State<TopBar> createState() => _TopBarState();
+  ConsumerState<TopBar> createState() => _TopBarState();
 }
 
-class _TopBarState extends State<TopBar> {
+class _TopBarState extends ConsumerState<TopBar> {
   @override
   Widget build(BuildContext context) {
+    final mode = ref.watch(angleModeProvider);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(1.0),
           child: ElevatedButton(
-            onPressed: () {},
-            child: Center(child: Text("DEG")),
+            onPressed: () {
+              ref.read(angleModeProvider.notifier).updateMode();
+            },
+            child: Center(child: Text(mode)),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(1.0),
           child: ElevatedButton(
             onPressed: () {},
-            child: Center(child: Text("COMP")),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [Text("COMP"), Center(child: Icon(Icons.arrow_drop_down))],
+            ),
           ),
         ),
         IconButton(

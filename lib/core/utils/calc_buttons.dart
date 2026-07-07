@@ -1,7 +1,17 @@
 class CalcButtons {
   static const List<String> basicCalcButtons = [
-    "MODE",
-    "□⁄□",
+    "pi",
+    "log(a,b)",
+    ",",
+    "X",
+    "Y",
+    "e",
+    "2nd",
+    "sin(",
+    "cos(",
+    "tan(",
+    "!",
+    "^",
     "(",
     ")",
     "f↔d",
@@ -23,15 +33,17 @@ class CalcButtons {
     "⇄",
     "0",
     ".",
-    "ANS",
+    "Ans",
     "=",
   ];
   static const List<String> scientificCalcButtons = [];
 }
 
 //Basic calculator to look like this
-// "MODE","□⁄□","(",")","f↔d",
+//    "pi","2nd",",","X","Y"
+//    "e","log(a,b)","sin(","cos(","tan("
+//     "!","^","(",")","f↔d",
 //     "7","8","9","DEL","AC",
 //     "4","5","6","x","÷",
 //     "1","2","3","+","-",
-//     "⇄","0",".","ANS","=",
+//     "⇄","0",".","Ans","=",

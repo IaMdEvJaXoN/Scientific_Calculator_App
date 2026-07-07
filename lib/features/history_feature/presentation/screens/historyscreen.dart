@@ -14,8 +14,7 @@ class _HistoryscreenState extends State<Historyscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HistoryAppBar(),
-      body: SafeArea(
-        child: HistoryScreenBody()),
+      body: SafeArea(child: HistoryScreenBody()),
     );
   }
 }

@@ -1,22 +1,67 @@
 import 'package:calc_x/core/routing/app_routes.dart';
 import 'package:calc_x/core/themes/colors.dart';
 import 'package:calc_x/core/utils/calc_buttons.dart';
+import 'package:calc_x/features/calculator_feature/presentation/providers/calc_display_provider.dart';
 import 'package:calc_x/features/calculator_feature/presentation/widgets/displayArea.dart';
 import 'package:calc_x/features/calculator_feature/presentation/widgets/gridview.dart';
 import 'package:calc_x/features/calculator_feature/presentation/widgets/topbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CalcScreen extends StatefulWidget {
+class CalcScreen extends ConsumerStatefulWidget {
   const CalcScreen({super.key});
 
   @override
-  State<CalcScreen> createState() => _CalcScreenState();
+  ConsumerState<CalcScreen> createState() => _CalcScreenState();
 }
 
-class _CalcScreenState extends State<CalcScreen> {
+class _CalcScreenState extends ConsumerState<CalcScreen> {
   // gridButton callbacks
   void buttonPressed(String value) {
-    //Handle the string parsed by the gridview
+    final displayNotifierReader = ref.read(
+      expressionAndResultProvider.notifier,
+    );
+    if (value == "=") {
+      displayNotifierReader.getResult(ans);
+    } else if (value == "DEL") {
+      displayNotifierReader.backSpace();
+    } else if (value == "AC") {
+      displayNotifierReader.clearAllInput();
+    } else if ([
+      "(",
+      ")",
+      "7",
+      "8",
+      "9",
+      "4",
+      "5",
+      "6",
+      "x",
+      "÷",
+      "1",
+      "2",
+      "3",
+      "+",
+      "-",
+      "0",
+      ".",
+      "log(a,b)",
+      ",",
+      "pi",
+      "e",
+      "sin(",
+      "cos(",
+      "tan(",
+      "!",
+      "^",
+      "(",
+      ")",
+      "Ans",
+    ].contains(value)) {
+      displayNotifierReader.updateUserInput(value);
+    } else {
+      return;
+    }
   }
 
   //settings,history,light/dark mode icons callbacks
@@ -48,8 +93,9 @@ class _CalcScreenState extends State<CalcScreen> {
             Expanded(flex: 5, child: DisplayArea()),
 
             Expanded(
-              flex: 7,
+              flex: 8,
               child: Container(
+                margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: DarkColors.gridColorforLightandDarkModes,
                   borderRadius: BorderRadius.circular(30),
