@@ -14,8 +14,8 @@ final hiveStorageInstanceProvider = Provider<HiveStorage>((ref) {
 
 final dataSourceProvider = Provider<CalculatorEngine>((ref) {
   final hives = ref.read(hiveStorageInstanceProvider);
-  final angleMode=ref.read(angleModeProvider);
-  return CalculatorEngine(hives,angleMode);
+  final angleMode = ref.read(angleModeProvider);
+  return CalculatorEngine(hives, angleMode);
 });
 
 final getResultRepositoryProvider = Provider<GetresultRepository>((ref) {
@@ -44,15 +44,15 @@ class DisplayNotifier extends StateNotifier<CalculatorDisplayState> {
     state = state.copyWith(expression: '${state.expression}$input', result: "");
   }
 
-  void getResult(num ans) {
+  void getResult() {
     if (state.expression.isEmpty) {
       return;
     }
-    _evaluateExpression(ans);
+    _evaluateExpression();
   }
 
-  Future<void> _evaluateExpression(num ans) async {
-    final resultFromEvaluator = await getSolutionUsecase(state.expression,ans);
+  Future<void> _evaluateExpression() async {
+    final resultFromEvaluator = await getSolutionUsecase(state.expression);
     state = state.copyWith(result: resultFromEvaluator.result.toString());
   }
 

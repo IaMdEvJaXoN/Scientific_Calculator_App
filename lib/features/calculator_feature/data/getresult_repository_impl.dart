@@ -8,9 +8,9 @@ class GetresultRepositoryImpl implements GetresultRepository {
   GetresultRepositoryImpl(this.dataSource);
 
   @override
-  Future<QueryEntity> getResultUseCase(String toBeEvaluated,num ans) async {
+  Future<QueryEntity> getResultUseCase(String toBeEvaluated) async {
     //Fetch result
-    final data = dataSource.evaluate(toBeEvaluated,ans);
+    final data = dataSource.evaluate(toBeEvaluated);
     //convert it to Model
     final querryModelFormat = QuerryModel.toModelFormat(data);
     //return as entity

@@ -15,7 +15,7 @@ class _DisplayareaState extends ConsumerState<DisplayArea> {
   Widget build(BuildContext context) {
     final displayAreaProvider = ref.watch(expressionAndResultProvider);
     return Container(
-      margin: EdgeInsets.all(15),
+      margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
         border: Border.all(width: 4, color: DarkColors.displayAreaOutlineColor),
         color: DarkColors.displayAreaContainerBackground,

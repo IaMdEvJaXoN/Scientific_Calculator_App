@@ -6,6 +6,7 @@ class CalculatorEngine {
   final HiveStorage hive;
   final GrammarParser parser;
   final String degreeMode;
+  num _previousAns = 0.0;
   CalculatorEngine(this.hive, this.degreeMode)
     : parser = GrammarParser(
         ParserOptions(
@@ -15,20 +16,38 @@ class CalculatorEngine {
         ),
       );
 
-  dynamic evaluate(String expressionToEvaluate, num ans) {
+  dynamic evaluate(String expressionToEvaluate) {
     try {
-      final input = _normalize(expressionToEvaluate);
-      final expression = parser.parse(input);
-      final context = ContextModel()..bindVariableName("Ans", Number(ans));
-      final evaluator = RealEvaluator(context);
-      final result = evaluator.evaluate(expression);
-      if (result.isNaN || result.isInfinite) {
-        throw FormatException('Math Error');
+      if (_previousAns == 0.0) {
+        final input = _normalize(expressionToEvaluate);
+        final expression = parser.parse(input);
+        final context = ContextModel()..bindVariableName("Ans", Number(0));
+        final evaluator = RealEvaluator(context);
+        final result = evaluator.evaluate(expression);
+        if (result.isNaN || result.isInfinite) {
+          throw FormatException('Math Error');
+        }
+        final time = DateTime.now();
+        final expressionToSave = "$expressionToEvaluate~$result~$time";
+        _saveDataToHive(expressionToSave);
+        _previousAns = result;
+        return result;
+      } else {
+        final input = _normalize(expressionToEvaluate);
+        final expression = parser.parse(input);
+        final context = ContextModel()
+          ..bindVariableName("Ans", Number(_previousAns));
+        final evaluator = RealEvaluator(context);
+        final result = evaluator.evaluate(expression);
+        if (result.isNaN || result.isInfinite) {
+          throw FormatException('Math Error');
+        }
+        final time = DateTime.now();
+        final expressionToSave = "$expressionToEvaluate~$result~$time";
+        _saveDataToHive(expressionToSave);
+        _previousAns = result;
+        return result;
       }
-      final time = DateTime.now();
-      final expressionToSave = "$expressionToEvaluate~$result~$time";
-      _saveDataToHive(expressionToSave);
-      return result;
     } on FormatException {
       return "Syntax Error";
     } on StateError {
@@ -77,9 +96,9 @@ class CalculatorEngine {
 
     expression = _convertLog10(expression);
 
-    // if (degreeMode) {
-    //   expression = _convertTrigDegreesToRadians(expression);
-    // }
+    if (degreeMode=="DEG") {
+      expression = _convertTrigDegreesToRadians(expression);
+    }
     return expression;
   }
 
@@ -90,15 +109,15 @@ class CalculatorEngine {
     );
   }
 
-  // String _convertTrigDegreesToRadians(String exp) {
-  //   final trigFunctions = ['sin', 'cos', 'tan'];
+  String _convertTrigDegreesToRadians(String exp) {
+    final trigFunctions = ['sin', 'cos', 'tan'];
 
-  //   for (final fn in trigFunctions) {
-  //     exp = exp.replaceAllMapped(
-  //       RegExp('$fn\\(([^()]+)\\)'),
-  //       (match) => '$fn((${match.group(1)})*pi/180)',
-  //     );
-  //   }
-  //   return exp;
-  // }
+    for (final fn in trigFunctions) {
+      exp = exp.replaceAllMapped(
+        RegExp('$fn\\(([^()]+)\\)'),
+        (match) => '$fn((${match.group(1)})*pi/180)',
+      );
+    }
+    return exp;
+  }
 }

@@ -22,7 +22,7 @@ class _CalcScreenState extends ConsumerState<CalcScreen> {
       expressionAndResultProvider.notifier,
     );
     if (value == "=") {
-      displayNotifierReader.getResult(ans);
+      displayNotifierReader.getResult();
     } else if (value == "DEL") {
       displayNotifierReader.backSpace();
     } else if (value == "AC") {
