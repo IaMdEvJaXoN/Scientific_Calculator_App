@@ -1,5 +1,7 @@
 import 'package:calc_x/core/routing/app_routes.dart';
+import 'package:calc_x/shared/models/onboarding_model.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -9,33 +11,88 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  int currentPage = 0;
+  late PageController _pageController;
   @override
   void initState() {
     super.initState();
-    _navigateToHome();
+    _pageController = PageController();
+    //_navigateToHome();
   }
 
-  Future<void> _navigateToHome() async {
-    await Future.delayed(const Duration(seconds: 4));
+  // Future<void> _navigateToHome() async {
+  //   await Future.delayed(const Duration(seconds: 4));
 
-    if (!mounted || !context.mounted) {
-      return;
-    }
+  //   if (!mounted || !context.mounted) {
+  //     return;
+  //   }
 
-    //For redundancy
-    if (!mounted) {
-      return;
-    }
+  //   //For redundancy
+  //   if (!mounted) {
+  //     return;
+  //   }
 
-    Navigator.of(context).pushReplacementNamed(AppRoutes.basicCalcScreen);
+  //   //Navigator.of(context).pushReplacementNamed(AppRoutes.basicCalcScreen);
+  // }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SizedBox.expand(
-          child: Image.asset("assets/images/splash_image.png", fit: BoxFit.fill),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 12,
+              child: PageView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: pages.length,
+                controller: _pageController,
+                itemBuilder: (context, index) {
+                  currentPage = index;
+                  final page = pages[index];
+                  return Image.asset(page.image, fit: BoxFit.fill);
+                },
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      if (currentPage == pages.length - 1) {
+                        Navigator.of(
+                          context,
+                        ).pushReplacementNamed(AppRoutes.basicCalcScreen);
+                      }
+                      _pageController.nextPage(
+                        duration: const Duration(milliseconds: 1000),
+                        curve: Curves.fastLinearToSlowEaseIn,
+                      );
+                    },
+                    child: Text("Next"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(
+                        context,
+                      ).pushReplacementNamed(AppRoutes.basicCalcScreen);
+                    },
+                    child: Text("Skip All"),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(flex: 1,child: SmoothPageIndicator(controller: _pageController, count: pages.length,axisDirection: Axis.horizontal,effect: WormEffect(dotWidth: 30,dotHeight: 20,dotColor:Color.fromARGB(250, 17, 63, 112),activeDotColor: Color.fromARGB(151, 29, 221, 239)),))
+          ],
         ),
       ),
     );

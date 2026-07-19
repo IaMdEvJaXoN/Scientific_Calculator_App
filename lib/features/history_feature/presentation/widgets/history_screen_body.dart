@@ -3,6 +3,7 @@ import 'package:calc_x/core/utils/string_splitting.dart';
 import 'package:calc_x/features/history_feature/presentation/providers/history_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
 
 class HistoryScreenBody extends ConsumerStatefulWidget {
   const HistoryScreenBody({super.key});
@@ -24,12 +25,23 @@ class _HistoryScreenBodyState extends ConsumerState<HistoryScreenBody> {
   Widget build(BuildContext context) {
     final historyState = ref.watch(historyProvider);
     historyList = historyState.history;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     if (historyList.isEmpty) {
-      return Center(
-        child: Text('''OOPS !!! 
-CAN'T
-RECALL
-        ''', style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+      return SafeArea(
+        child: Center(
+          child: Lottie.asset(
+            "assets/lottie_animations/No Data Available.json",
+            repeat: true,
+            height: height * 0.9,
+            width: width * 0.9,
+          ),
+
+          //Text('''OOPS !!!
+          // CAN'T
+          // RECALL
+          //         ''', style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+        ),
       );
     }
     return Column(
@@ -86,8 +98,8 @@ RECALL
                           Expanded(
                             flex: 1,
                             child: IconButton(
-                              onPressed: () {
-                                ref
+                              onPressed: () async {
+                                await ref
                                     .read(historyProvider.notifier)
                                     .removeItemFromHistory(index);
                               },

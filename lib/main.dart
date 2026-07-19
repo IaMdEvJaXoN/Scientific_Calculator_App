@@ -3,11 +3,23 @@ import 'package:calc_x/core/routing/router.dart';
 import 'package:calc_x/core/themes/app_themes.dart';
 import 'package:calc_x/shared/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.edgeToEdge,
+  ); //Extends UI behind the appbar
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.dark,
+    ),
+  );
   await Hive.initFlutter();
   await Hive.openBox<String>("history"); //Creates a database called history
   runApp(const ProviderScope(child: MyApp()));

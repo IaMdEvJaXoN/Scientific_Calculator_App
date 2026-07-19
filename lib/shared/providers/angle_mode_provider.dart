@@ -1,14 +1,24 @@
+import 'package:calc_x/core/services/shared_prefs.dart';
+import 'package:calc_x/shared/providers/theme_provider.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
-final angleModeProvider = StateNotifierProvider<AngleNotifier, String>((_) {
-  return AngleNotifier();
+final angleModeProvider = StateNotifierProvider<AngleNotifier, String>((ref) {
+  final prefs = ref.read(sharedPrefsProvider);
+  return AngleNotifier(preferences: prefs);
 });
 
 class AngleNotifier extends StateNotifier<String> {
-  AngleNotifier() : super("DEG");
+  final SharedPrefs preferences;
+  AngleNotifier({required this.preferences}) : super("DEG") {
+    loadSavedAngleMode();
+  }
 
-  void updateMode() {
+  Future<void> loadSavedAngleMode() async {
+    state = await preferences.loadAngleMode();
+  }
+
+  Future<void> updateMode() async {
     state == "DEG" ? state = "RAD" : state = "DEG";
-    return;
+    await preferences.saveAngleMode(state);
   }
 }

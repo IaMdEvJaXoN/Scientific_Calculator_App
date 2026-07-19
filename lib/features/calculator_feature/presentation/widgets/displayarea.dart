@@ -26,9 +26,9 @@ class _DisplayareaState extends ConsumerState<DisplayArea> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            flex: 2,
+            flex: 4,
             child: Padding(
-              padding: const EdgeInsets.all(1.0),
+              padding: const EdgeInsets.all(0),
               child: Container(
                 color: DarkColors.resultAndExpressionDisplayBackgnd,
                 margin: EdgeInsets.all(10),

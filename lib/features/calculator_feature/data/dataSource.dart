@@ -5,9 +5,8 @@ import 'package:math_expressions/math_expressions.dart';
 class CalculatorEngine {
   final HiveStorage hive;
   final GrammarParser parser;
-  final String degreeMode;
   num _previousAns = 0.0;
-  CalculatorEngine(this.hive, this.degreeMode)
+  CalculatorEngine(this.hive)
     : parser = GrammarParser(
         ParserOptions(
           implicitMultiplication:
@@ -63,17 +62,7 @@ class CalculatorEngine {
 
   String _normalize(String text) {
     var expression = text.trim();
-
-    expression = expression
-        .replaceAll('x', '*')
-        .replaceAll('÷', '/')
-        .replaceAll('-', '-')
-        .replaceAll('π', 'pi')
-        .replaceAll('²', '^2')
-        .replaceAll('³', '^3')
-        .replaceAll('√(', 'sqrt(')
-        .replaceAll('√', 'sqrt');
-
+    expression = expression.replaceAll('x', '*').replaceAll('÷', '/');
     expression = expression
         // Number adjacent to an open parenthesis: 2(3) -> 2*(3)
         .replaceAllMapped(RegExp(r'(\d)\('), (m) => '${m.group(1)}*(')
@@ -90,34 +79,63 @@ class CalculatorEngine {
         .replaceAllMapped(RegExp(r'\)([a-zA-Z])'), (m) => ')*${m.group(1)}');
 
     expression = expression
-        .replaceAll('asin(', 'arcsin(')
-        .replaceAll('acos(', 'arccos(')
-        .replaceAll('atan(', 'arctan(');
+        .replaceAll('sin⁻¹(', 'arcsin(')
+        .replaceAll('cos⁻¹(', 'arccos(')
+        .replaceAll('tan⁻¹(', 'arctan(');
 
-    expression = _convertLog10(expression);
+    expression = _convertLog(expression);
 
-    if (degreeMode=="DEG") {
-      expression = _convertTrigDegreesToRadians(expression);
-    }
     return expression;
   }
 
-  String _convertLog10(String exp) {
-    return exp.replaceAllMapped(
-      RegExp(r'log\(([^()]+)\)'),
-      (match) => 'log(10,${match.group(1)})',
-    );
-  }
+  String _convertLog(String expression) {
+    while (true) {
+      // Find the innermost log(
+      final start = expression.lastIndexOf('log(');
+      if (start == -1) break;
 
-  String _convertTrigDegreesToRadians(String exp) {
-    final trigFunctions = ['sin', 'cos', 'tan'];
+      final open = start + 3; // Index of '('
 
-    for (final fn in trigFunctions) {
-      exp = exp.replaceAllMapped(
-        RegExp('$fn\\(([^()]+)\\)'),
-        (match) => '$fn((${match.group(1)})*pi/180)',
+      int depth = 0;
+      int? commaIndex;
+      int? closeIndex;
+
+      for (int i = open + 1; i < expression.length; i++) {
+        switch (expression[i]) {
+          case '(':
+            depth++;
+            break;
+
+          case ')':
+            if (depth == 0) {
+              closeIndex = i;
+              i = expression.length; // Exit loop
+            } else {
+              depth--;
+            }
+            break;
+
+          case ',':
+            if (depth == 0) {
+              commaIndex = i;
+            }
+            break;
+        }
+      }
+
+      if (commaIndex == null || closeIndex == null) {
+        throw const FormatException('Invalid log() expression');
+      }
+
+      final base = expression.substring(open + 1, commaIndex).trim();
+      final value = expression.substring(commaIndex + 1, closeIndex).trim();
+
+      expression = expression.replaceRange(
+        start,
+        closeIndex + 1,
+        '(ln($value)/ln($base))',
       );
     }
-    return exp;
+    return expression;
   }
 }

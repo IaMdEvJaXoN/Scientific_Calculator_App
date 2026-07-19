@@ -16,6 +16,7 @@ class _TopBarState extends ConsumerState<TopBar> {
     final mode = ref.watch(angleModeProvider);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      
       children: [
         Padding(
           padding: const EdgeInsets.all(1.0),

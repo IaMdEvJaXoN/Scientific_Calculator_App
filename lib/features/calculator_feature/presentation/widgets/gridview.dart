@@ -1,13 +1,14 @@
+import 'package:calc_x/features/calculator_feature/presentation/providers/calc_display_provider.dart';
 import 'package:calc_x/shared/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ButtonsGrid extends ConsumerStatefulWidget {
-  final List<String> buttons;
+  //final List<String> buttons;
   final Function(String) onButtonPressed;
   const ButtonsGrid({
     super.key,
-    required this.buttons,
+    //required this.buttons,
     required this.onButtonPressed,
   });
 
@@ -18,9 +19,10 @@ class ButtonsGrid extends ConsumerStatefulWidget {
 class _ButtonsGridState extends ConsumerState<ButtonsGrid> {
   @override
   Widget build(BuildContext context) {
-    final List<String> gridButtons = widget.buttons;
+    //final List<String> gridButtons = widget.buttons;
     final myAppThemeProvider = ref.watch(appThemeProvider);
     final isDark = myAppThemeProvider == ThemeMode.dark ? true : false;
+    final List<String> gridButtons = ref.watch(calcButtonsProvider).buttons;
 
     return GridView.builder(
       padding: EdgeInsets.all(15),
@@ -49,11 +51,19 @@ class _ButtonsGridState extends ConsumerState<ButtonsGrid> {
           isDark
               ? backGroundColor = const Color(0xFF6671AB)
               : backGroundColor = const Color(0xFF6671AB);
-        } else if (["2nd", "sin(", "cos(", "tan("].contains(buttonText)) {
+        } else if ([
+          "2nd",
+          "sin(",
+          "cos(",
+          "tan(",
+          "sin⁻¹(",
+          "cos⁻¹(",
+          "tan⁻¹(",
+        ].contains(buttonText)) {
           isDark
               ? backGroundColor = const Color.fromARGB(255, 1, 11, 57)
               : backGroundColor = const Color.fromARGB(255, 77, 98, 220);
-        } else if (["pi", "e"].contains(buttonText)) {
+        } else if (["π", "e"].contains(buttonText)) {
           isDark
               ? backGroundColor = const Color.fromARGB(255, 48, 30, 14)
               : backGroundColor = const Color.fromARGB(255, 78, 19, 3);
@@ -61,7 +71,7 @@ class _ButtonsGridState extends ConsumerState<ButtonsGrid> {
           ",",
           "X",
           "Y",
-          "log(a,b)",
+          "log(b,m)",
           ".",
           "!",
           "^",
@@ -89,15 +99,25 @@ class _ButtonsGridState extends ConsumerState<ButtonsGrid> {
           child: Center(
             child: Text(
               gridButtons[index],
-              style: ["DEL", "cos(", "sin(", "tan(", "2nd"].contains(buttonText)
+              style:
+                  [
+                    "DEL",
+                    "cos(",
+                    "sin(",
+                    "tan(",
+                    "2nd",
+                    "sin⁻¹(",
+                    "cos⁻¹(",
+                    "tan⁻¹(",
+                  ].contains(buttonText)
                   ? Theme.of(
                       context,
-                    ).textTheme.labelLarge?.copyWith(fontSize: 24)
+                    ).textTheme.labelLarge?.copyWith(fontSize: 20)
                   : ["f↔d", "Ans"].contains(buttonText)
                   ? Theme.of(
                       context,
-                    ).textTheme.labelLarge?.copyWith(fontSize: 22)
-                  : buttonText == "log(a,b)"
+                    ).textTheme.labelLarge?.copyWith(fontSize: 18)
+                  : buttonText == "log(b,m)"
                   ? Theme.of(
                       context,
                     ).textTheme.labelLarge?.copyWith(fontSize: 16)

@@ -1,10 +1,11 @@
 import 'package:calc_x/core/routing/app_routes.dart';
 import 'package:calc_x/core/themes/colors.dart';
-import 'package:calc_x/core/utils/calc_buttons.dart';
 import 'package:calc_x/features/calculator_feature/presentation/providers/calc_display_provider.dart';
 import 'package:calc_x/features/calculator_feature/presentation/widgets/displayArea.dart';
 import 'package:calc_x/features/calculator_feature/presentation/widgets/gridview.dart';
 import 'package:calc_x/features/calculator_feature/presentation/widgets/topbar.dart';
+import 'package:calc_x/shared/providers/angle_mode_provider.dart';
+import 'package:calc_x/shared/providers/decimal_places_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,13 +17,23 @@ class CalcScreen extends ConsumerStatefulWidget {
 }
 
 class _CalcScreenState extends ConsumerState<CalcScreen> {
+  bool inverseTrigMode = false;
   // gridButton callbacks
   void buttonPressed(String value) {
     final displayNotifierReader = ref.read(
       expressionAndResultProvider.notifier,
     );
+    final angleModeReader = ref.read(angleModeProvider);
+    final decimalsCount = ref.read(decimalPlacesProvider);
     if (value == "=") {
-      displayNotifierReader.getResult();
+      displayNotifierReader.getResult(angleModeReader, decimalsCount);
+    } else if (value == "2nd") {
+      ref
+          .read(calcButtonsProvider.notifier)
+          .updateOn2ndButtonPressed(inverseTrigMode);
+      inverseTrigMode = !inverseTrigMode;
+    } else if (value == "f↔d") {
+      displayNotifierReader.setResultToFraction();
     } else if (value == "DEL") {
       displayNotifierReader.backSpace();
     } else if (value == "AC") {
@@ -45,13 +56,16 @@ class _CalcScreenState extends ConsumerState<CalcScreen> {
       "-",
       "0",
       ".",
-      "log(a,b)",
+      "log(b,m)",
       ",",
-      "pi",
+      "π",
       "e",
       "sin(",
       "cos(",
       "tan(",
+      "sin⁻¹(",
+      "cos⁻¹(",
+      "tan⁻¹(",
       "!",
       "^",
       "(",
@@ -75,6 +89,8 @@ class _CalcScreenState extends ConsumerState<CalcScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //final gridButtonsProvider = ref.watch(calcButtonsProvider);
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -93,7 +109,7 @@ class _CalcScreenState extends ConsumerState<CalcScreen> {
             Expanded(flex: 5, child: DisplayArea()),
 
             Expanded(
-              flex: 8,
+              flex: 11,
               child: Container(
                 margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -101,7 +117,7 @@ class _CalcScreenState extends ConsumerState<CalcScreen> {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: ButtonsGrid(
-                  buttons: CalcButtons.basicCalcButtons,
+                  //buttons: gridButtonsProvider.buttons,
                   onButtonPressed: buttonPressed,
                 ),
               ),

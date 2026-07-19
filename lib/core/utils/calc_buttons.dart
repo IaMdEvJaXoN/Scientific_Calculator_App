@@ -1,7 +1,7 @@
-class CalcButtons {
+class CalcGridButtons {
   static const List<String> basicCalcButtons = [
-    "pi",
-    "log(a,b)",
+    "π",
+    "log(b,m)",
     ",",
     "X",
     "Y",
