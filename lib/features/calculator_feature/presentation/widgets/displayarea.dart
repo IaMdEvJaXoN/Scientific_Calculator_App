@@ -33,13 +33,9 @@ class _DisplayareaState extends ConsumerState<DisplayArea> {
                 color: DarkColors.resultAndExpressionDisplayBackgnd,
                 margin: EdgeInsets.all(10),
                 alignment: Alignment.bottomRight,
-                child: AnimatedScale(
-                  scale: 1.2,
-                  duration: const Duration(milliseconds: 2000),
-                  child: Text(
-                    displayAreaProvider.result,
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
+                child: Text(
+                  displayAreaProvider.result,
+                  style: Theme.of(context).textTheme.displayLarge,
                 ),
               ),
             ),
