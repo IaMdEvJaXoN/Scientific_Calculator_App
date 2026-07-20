@@ -59,7 +59,7 @@ class _SettingsBuilderState extends ConsumerState<SettingsBuilder> {
                               .read(appThemeProvider.notifier)
                               .setThemeMode(ThemeMode.dark);
                         },
-                        label: Text("Dark"),
+                        label: Text("Dark", style: TextStyle(fontSize: 18)),
                         icon: Icon(Icons.dark_mode_outlined),
                       ),
                     ),
@@ -75,7 +75,7 @@ class _SettingsBuilderState extends ConsumerState<SettingsBuilder> {
                               .read(appThemeProvider.notifier)
                               .setThemeMode(ThemeMode.light);
                         },
-                        label: Text("Light"),
+                        label: Text("Light", style: TextStyle(fontSize: 18)),
                         icon: Icon(Icons.light_mode_outlined),
                       ),
                     ),
@@ -91,7 +91,7 @@ class _SettingsBuilderState extends ConsumerState<SettingsBuilder> {
                               .read(appThemeProvider.notifier)
                               .setThemeMode(ThemeMode.system);
                         },
-                        label: Text("System", style: TextStyle(fontSize: 24)),
+                        label: Text("System", style: TextStyle(fontSize: 18)),
                         icon: Icon(Icons.brightness_auto_outlined),
                       ),
                     ),
@@ -147,13 +147,19 @@ class _SettingsBuilderState extends ConsumerState<SettingsBuilder> {
           ),
           Column(
             children: [
-              FittedBox(
-                fit: BoxFit.contain,
-                child: Image.asset("assets/images/settings.png"),
+              Container(
+                margin: EdgeInsets.all(40),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: Image.asset("assets/images/settings.png"),
+                ),
               ),
 
               Center(
-                child: Text("Version 1.0.0", style: TextStyle(fontSize: 20)),
+                child: Text("Version 1.0.0", style: TextStyle(fontSize: 24)),
               ),
             ],
           ),

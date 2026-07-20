@@ -17,23 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _pageController = PageController();
-    //_navigateToHome();
   }
-
-  // Future<void> _navigateToHome() async {
-  //   await Future.delayed(const Duration(seconds: 4));
-
-  //   if (!mounted || !context.mounted) {
-  //     return;
-  //   }
-
-  //   //For redundancy
-  //   if (!mounted) {
-  //     return;
-  //   }
-
-  //   //Navigator.of(context).pushReplacementNamed(AppRoutes.basicCalcScreen);
-  // }
 
   @override
   void dispose() {
@@ -91,7 +75,20 @@ class _SplashScreenState extends State<SplashScreen> {
                 ],
               ),
             ),
-            Expanded(flex: 1,child: SmoothPageIndicator(controller: _pageController, count: pages.length,axisDirection: Axis.horizontal,effect: WormEffect(dotWidth: 30,dotHeight: 20,dotColor:Color.fromARGB(250, 17, 63, 112),activeDotColor: Color.fromARGB(151, 29, 221, 239)),))
+            Expanded(
+              flex: 1,
+              child: SmoothPageIndicator(
+                controller: _pageController,
+                count: pages.length,
+                axisDirection: Axis.horizontal,
+                effect: WormEffect(
+                  dotWidth: 20,
+                  dotHeight: 10,
+                  dotColor: Color.fromARGB(250, 17, 63, 112),
+                  activeDotColor: Color.fromARGB(151, 29, 221, 239),
+                ),
+              ),
+            ),
           ],
         ),
       ),

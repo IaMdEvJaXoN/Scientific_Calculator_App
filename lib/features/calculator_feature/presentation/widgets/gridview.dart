@@ -99,28 +99,26 @@ class _ButtonsGridState extends ConsumerState<ButtonsGrid> {
           child: Center(
             child: Text(
               gridButtons[index],
-              style:
-                  [
-                    "DEL",
-                    "cos(",
-                    "sin(",
-                    "tan(",
-                    "2nd",
-                    "sin⁻¹(",
-                    "cos⁻¹(",
-                    "tan⁻¹(",
-                  ].contains(buttonText)
+              style: buttonText == "AC"
                   ? Theme.of(
                       context,
-                    ).textTheme.labelLarge?.copyWith(fontSize: 20)
+                    ).textTheme.labelLarge?.copyWith(fontSize: 14)
+                  : ["sin⁻¹(", "cos⁻¹(", "tan⁻¹("].contains(buttonText)
+                  ? Theme.of(
+                      context,
+                    ).textTheme.labelLarge?.copyWith(fontSize: 10)
+                  : ["DEL", "cos(", "sin(", "tan(", "2nd"].contains(buttonText)
+                  ? Theme.of(
+                      context,
+                    ).textTheme.labelLarge?.copyWith(fontSize: 14)
                   : ["f↔d", "Ans"].contains(buttonText)
                   ? Theme.of(
                       context,
-                    ).textTheme.labelLarge?.copyWith(fontSize: 18)
+                    ).textTheme.labelLarge?.copyWith(fontSize: 14)
                   : buttonText == "log(b,m)"
                   ? Theme.of(
                       context,
-                    ).textTheme.labelLarge?.copyWith(fontSize: 16)
+                    ).textTheme.labelLarge?.copyWith(fontSize: 12)
                   : Theme.of(context).textTheme.labelLarge,
             ),
           ),
